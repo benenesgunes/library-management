@@ -10,6 +10,7 @@ export default function StaffBooks() {
     const { token, isStaff } = useAuthStore.getState();
     const memberIdRef = useRef();
     const [ bookId, setBookId ] = useState();
+    const bookIdRef = useRef();
 
     useEffect(() => {
         const fetchStaffBooks = async () => {
@@ -66,9 +67,14 @@ export default function StaffBooks() {
             {token ? 
                 <>
                     <div className="p-4 md:p-6 lg:p-8 flex flex-col gap-y-2 md:gap-y-3 lg:gap-y-4">
-                        <h1 className="font-semibold text-xl md:text-2xl lg:text-3xl">
-                            Available Books
-                        </h1>
+                        <div className="flex items-center justify-between mb-2">
+                            <h1 className="font-semibold text-xl md:text-2xl lg:text-3xl">
+                                Available Books
+                            </h1>
+                            <button className="primary-button" onClick={() => document.getElementById("idInputDiv2").classList.add("idInputDivOpen")}>
+                                Loan with Book ID
+                            </button>
+                        </div>
                         <div className="flex flex-col gap-y-2 md:gap-y-3 lg:gap-y-4 md:gap-x-3 lg:gap-x-4 md:grid md:grid-cols-2 xl:grid-cols-3">
                             {staffBooks?.map((book) => (
                                 <div key={book.Book_ID} className="bg-light-card dark:bg-dark-card border-light-border dark:border-dark-border border-2 p-4 md:p-5 lg:p-6 rounded-2xl flex justify-between items-center">
@@ -100,13 +106,46 @@ export default function StaffBooks() {
                                     border-2 border-light-border dark:border-dark-border
                                     w-4/5 md:w-3/5 lg:w-1/3">
                         <input ref={memberIdRef} type="number" className="input" placeholder="Member ID" />
-                        <button onClick={() => {
-                                handleCreateLoan(bookId, memberIdRef.current.value); 
-                                document.getElementById("idInputDiv").classList.remove("idInputDivOpen");
-                            }} 
-                            className="primary-button">
-                            Enter Member ID
-                        </button>
+                        <div className="flex justify-between w-full">
+                            <button onClick={() => {
+                                    document.getElementById("idInputDiv").classList.remove("idInputDivOpen");
+                                }} 
+                                className="logout-button">
+                                Back
+                            </button>
+                            <button onClick={() => {
+                                    handleCreateLoan(bookId, memberIdRef.current.value); 
+                                    document.getElementById("idInputDiv").classList.remove("idInputDivOpen");
+                                }} 
+                                className="primary-button">
+                                Enter Member ID
+                            </button>
+                        </div>
+                    </div>
+                    <div id="idInputDiv2" className="absolute top-1/2 left-1/2 transform -translate-1/2 z-[1001]
+                                    p-4 md:p-6 lg:p-8
+                                    bg-light-card dark:bg-dark-card
+                                    hidden flex-col items-center gap-y-4 md:gap-y-6 lg:gap-y-8
+                                    shadow-2xl rounded-2xl
+                                    border-2 border-light-border dark:border-dark-border
+                                    w-4/5 md:w-3/5 lg:w-1/3">
+                        <input ref={bookIdRef} type="number" className="input" placeholder="Book ID" />
+                        <input ref={memberIdRef} type="number" className="input" placeholder="Member ID" />
+                        <div className="flex justify-between w-full">
+                            <button onClick={() => {
+                                    document.getElementById("idInputDiv2").classList.remove("idInputDivOpen");
+                                }} 
+                                className="logout-button">
+                                Back
+                            </button>
+                            <button onClick={() => {
+                                    handleCreateLoan(bookIdRef.current.value, memberIdRef.current.value); 
+                                    document.getElementById("idInputDiv2").classList.remove("idInputDivOpen");
+                                }} 
+                                className="primary-button">
+                                Loan Book
+                            </button>
+                        </div>
                     </div>
                     <div id="pop-up" className="absolute bottom-0 left-[-100%] transform -translate-x-1/2
                                                 bg-light-card dark:bg-dark-card

@@ -9,34 +9,34 @@ export default function StaffLoans() {
     const [ allLoans, setAllLoans ] = useState();
     const { token, isStaff } = useAuthStore.getState();
 
-    useEffect(() => {
-        const fetchAllLoans = async () => {
-            if(!token) {
-                return navigate("/staffsignin");
-            }
-            if(!isStaff) {
-                return navigate("/");
-            }
-
-            try {
-                const response = await axios.get(`${API_BASE}/api/staff/loans`, {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                })
-
-                if(response.data.success) {
-                    setAllLoans(response.data.data);
-                    console.log("all loans fetched successfully");
-                }
-            }
-            catch(error) {
-                console.log(error);
-            }
+    const fetchAllLoans = async () => {
+        if(!token) {
+            return navigate("/staffsignin");
+        }
+        if(!isStaff) {
+            return navigate("/");
         }
 
+        try {
+            const response = await axios.get(`${API_BASE}/api/staff/loans`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+
+            if(response.data.success) {
+                setAllLoans(response.data.data);
+                console.log("all loans fetched successfully");
+            }
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
         fetchAllLoans();
-    }, [allLoans])
+    }, [])
 
     const returnBook = async (loanId) => {
         const { token } = useAuthStore.getState();
@@ -50,6 +50,7 @@ export default function StaffLoans() {
 
             if(response.data.success) {
                 console.log("returned book successfully");
+                fetchAllLoans();
                 document.getElementById("pop-up").classList.toggle("visiblePopUp");
                 setTimeout(() => document.getElementById("pop-up").classList.toggle("visiblePopUp"), 3000);
             }

@@ -213,6 +213,56 @@ app.get('/api/member/books', authenticateMember, async (req, res) => {
   }
 });
 
+app.get('/api/member/books/filter', authenticateMember, async (req, res) => {
+  try {
+    const { category, author } = req.query;
+
+    let query = `
+      SELECT 
+        b.Book_ID,
+        b.Title,
+        b.Publication_Year,
+        b.Publisher,
+        b.Number_of_Copies,
+        CONCAT(a.First_Name, ' ', a.Last_Name) as Author_Name,
+        c.Name as Category_Name,
+        (b.Number_of_Copies - COALESCE(active_loans.count, 0)) as Available_Copies
+      FROM Book b
+      LEFT JOIN Author a ON b.Author_ID = a.Author_ID
+      LEFT JOIN Category c ON b.Category_ID = c.Category_ID
+      LEFT JOIN (
+        SELECT Book_ID, COUNT(*) as count 
+        FROM Loan 
+        WHERE Return_Status = FALSE 
+        GROUP BY Book_ID
+      ) active_loans ON b.Book_ID = active_loans.Book_ID
+      WHERE 1=1
+    `;
+
+    const values = [];
+
+    if (category) {
+      query += ` AND c.Name LIKE ?`;
+      values.push(`%${category}%`);
+    }
+
+    if (author) {
+      query += ` AND CONCAT(a.First_Name, ' ', a.Last_Name) LIKE ?`;
+      values.push(`%${author}%`);
+    }
+
+    query += ` AND (b.Number_of_Copies - COALESCE(active_loans.count, 0)) > 0`;
+    query += ` ORDER BY b.Title`;
+
+    const [rows] = await db.execute(query, values);
+
+    res.json({ success: true, data: rows });
+  } catch (error) {
+    console.error('Filter books error:', error);
+    res.status(500).json({ success: false, message: 'Error filtering books' });
+  }
+});
+
 app.get('/api/member/loans', authenticateMember, async (req, res) => {
   try {
     const [rows] = await db.execute(`
@@ -381,6 +431,34 @@ app.put('/api/staff/loans/:loanId/return', authenticateStaff, async (req, res) =
   } catch (error) {
     console.error('Return book error:', error);
     res.status(500).json({ success: false, message: 'Error returning book' });
+  }
+});
+
+app.get('/api/authors', async (req, res) => {
+  try {
+    const [rows] = await db.execute(`
+      SELECT
+        CONCAT(First_Name, " ", Last_Name) as Author_Name
+        from Author`)
+
+    res.json({success: true, data: rows})
+  } catch(error) {
+    console.error('Get authors error:', error);
+    res.status(500).json({ success: false, message: 'Error getting authors' });
+  }
+});
+
+app.get('/api/categories', async (req, res) => {
+  try {
+    const [rows] = await db.execute(`
+      SELECT
+        Name as Category_Name
+        from Category`)
+
+    res.json({success: true, data: rows})
+  } catch(error) {
+    console.error('Get categories error:', error);
+    res.status(500).json({ success: false, message: 'Error getting categories' });
   }
 });
 

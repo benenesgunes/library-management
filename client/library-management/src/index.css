@@ -80,3 +80,10 @@
 .visiblePopUp {
     @apply left-1/2;
 }
+
+select {
+  @apply bg-light-input-bg dark:bg-light-input-bg
+         px-3 py-2 lg:px-4 lg:py-3
+         rounded-2xl
+         text-sm lg:text-base font-semibold;
+}
