@@ -36,7 +36,7 @@ export default function StaffLoans() {
         }
 
         fetchAllLoans();
-    }, [])
+    }, [allLoans])
 
     const returnBook = async (loanId) => {
         const { token } = useAuthStore.getState();
@@ -50,7 +50,8 @@ export default function StaffLoans() {
 
             if(response.data.success) {
                 console.log("returned book successfully");
-                location.reload();
+                document.getElementById("pop-up").classList.toggle("visiblePopUp");
+                setTimeout(() => document.getElementById("pop-up").classList.toggle("visiblePopUp"), 3000);
             }
         }
         catch(error) {
@@ -95,7 +96,10 @@ export default function StaffLoans() {
                                     </div>
                                 </div>
                                 {loan.Return_Status === 0 ?
-                                    <button onClick={() => returnBook(loan.Loan_ID)} className="logout-button">
+                                    <button onClick={() => {
+                                            returnBook(loan.Loan_ID);
+                                        }} 
+                                        className="logout-button">
                                         Return
                                     </button>
                                     :
@@ -103,6 +107,14 @@ export default function StaffLoans() {
                                         Returned
                                     </p>
                                 }
+                                <div id="pop-up" className="absolute bottom-0 left-[-100%] transform -translate-x-1/2
+                                                            bg-light-card dark:bg-dark-card
+                                                            w-9/10 md:w-4/5 lg:w-3/5 mx-auto p-4 md:p-5 lg:p-6 my-4 md:my-5 lg:my-6
+                                                            md:text-lg lg:text-xl rounded-2xl md:rounded-3xl lg:rounded-4xl
+                                                            flex items-center justify-center gap-x-2
+                                                            transition-all">
+                                    Book returned successfully!
+                                </div>
                             </div>
                         ))}
                     </div>

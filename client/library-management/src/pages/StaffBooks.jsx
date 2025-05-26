@@ -52,6 +52,8 @@ export default function StaffBooks() {
 
             if(response.data.success) {
                 console.log("loan created successfully");
+                document.getElementById("pop-up").classList.toggle("visiblePopUp");
+                setTimeout(() => document.getElementById("pop-up").classList.toggle("visiblePopUp"), 3000); 
             }
         }
         catch(error) {
@@ -98,9 +100,21 @@ export default function StaffBooks() {
                                     border-2 border-light-border dark:border-dark-border
                                     w-4/5 md:w-3/5 lg:w-1/3">
                         <input ref={memberIdRef} type="number" className="input" placeholder="Member ID" />
-                        <button onClick={() => {handleCreateLoan(bookId, memberIdRef.current.value); document.getElementById("idInputDiv").classList.remove("idInputDivOpen")}} className="primary-button">
+                        <button onClick={() => {
+                                handleCreateLoan(bookId, memberIdRef.current.value); 
+                                document.getElementById("idInputDiv").classList.remove("idInputDivOpen");
+                            }} 
+                            className="primary-button">
                             Enter Member ID
                         </button>
+                    </div>
+                    <div id="pop-up" className="absolute bottom-0 left-[-100%] transform -translate-x-1/2
+                                                bg-light-card dark:bg-dark-card
+                                                w-9/10 md:w-4/5 lg:w-3/5 mx-auto p-4 md:p-5 lg:p-6 my-4 md:my-5 lg:my-6
+                                                md:text-lg lg:text-xl rounded-2xl md:rounded-3xl lg:rounded-4xl
+                                                flex items-center justify-center gap-x-2
+                                                transition-all">
+                        Book loaned successfully!
                     </div>
                 </>
                 :

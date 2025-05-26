@@ -76,3 +76,7 @@
 .idInputDivOpen {
   @apply flex;
 }
+
+.visiblePopUp {
+    @apply left-1/2;
+}
