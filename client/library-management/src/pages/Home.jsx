@@ -1,9 +1,6 @@
 import { Link } from "react-router"
 import useAuthStore from "../useAuthStore";
 
-// auth sayfalarinda errorDisplay yapcaksin
-// staff loan ve return yaptiginda basarili veya basarisiz oldugunu belirten pop-up cikart asagidan. lunascriptte boyle bi sey yaptik
-
 export default function Home() {
     const { token, user, isStaff } = useAuthStore.getState();
 
