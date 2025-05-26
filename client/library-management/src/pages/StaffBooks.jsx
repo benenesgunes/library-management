@@ -9,6 +9,7 @@ export default function StaffBooks() {
     const [ staffBooks, setStaffBooks ] = useState();
     const { token, isStaff } = useAuthStore.getState();
     const memberIdRef = useRef();
+    const memberIdRef2 = useRef();
     const [ bookId, setBookId ] = useState();
     const bookIdRef = useRef();
 
@@ -91,7 +92,7 @@ export default function StaffBooks() {
                                             {book.Author_Name}
                                         </p>
                                     </div>
-                                    <button onClick={() => {document.getElementById("idInputDiv").classList.add("idInputDivOpen"); setBookId(book.Book_ID)}} className="primary-button">
+                                    <button onClick={() => {document.getElementById("idInputDiv").classList.add("idInputDivOpen"); setBookId(book.Book_ID);}} className="primary-button">
                                         Loan
                                     </button>
                                 </div>
@@ -114,7 +115,8 @@ export default function StaffBooks() {
                                 Back
                             </button>
                             <button onClick={() => {
-                                    handleCreateLoan(bookId, memberIdRef.current.value); 
+                                    handleCreateLoan(bookId, memberIdRef.current.value);
+                                    memberIdRef.current.value = "";
                                     document.getElementById("idInputDiv").classList.remove("idInputDivOpen");
                                 }} 
                                 className="primary-button">
@@ -130,7 +132,7 @@ export default function StaffBooks() {
                                     border-2 border-light-border dark:border-dark-border
                                     w-4/5 md:w-3/5 lg:w-1/3">
                         <input ref={bookIdRef} type="number" className="input" placeholder="Book ID" />
-                        <input ref={memberIdRef} type="number" className="input" placeholder="Member ID" />
+                        <input ref={memberIdRef2} type="number" className="input" placeholder="Member ID" />
                         <div className="flex justify-between w-full">
                             <button onClick={() => {
                                     document.getElementById("idInputDiv2").classList.remove("idInputDivOpen");
@@ -139,7 +141,9 @@ export default function StaffBooks() {
                                 Back
                             </button>
                             <button onClick={() => {
-                                    handleCreateLoan(bookIdRef.current.value, memberIdRef.current.value); 
+                                    handleCreateLoan(bookIdRef.current.value, memberIdRef2.current.value); 
+                                    bookIdRef.current.value = "";
+                                    memberIdRef2.current.value = "";
                                     document.getElementById("idInputDiv2").classList.remove("idInputDivOpen");
                                 }} 
                                 className="primary-button">
@@ -148,7 +152,8 @@ export default function StaffBooks() {
                         </div>
                     </div>
                     <div id="pop-up" className="absolute bottom-0 left-[-100%] transform -translate-x-1/2
-                                                bg-light-card dark:bg-dark-card
+                                                bg-light-card dark:bg-dark-card 
+                                                border-2 border-success
                                                 w-9/10 md:w-4/5 lg:w-3/5 mx-auto p-4 md:p-5 lg:p-6 my-4 md:my-5 lg:my-6
                                                 md:text-lg lg:text-xl rounded-2xl md:rounded-3xl lg:rounded-4xl
                                                 flex items-center justify-center gap-x-2
