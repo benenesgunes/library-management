@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Cinzel:wght@400..900&family=Gruppo&family=Instrument+Serif:ital@0;1&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oranienbaum&family=Pacifico&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Uncial+Antiqua&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-*: initial;
+
+  --color-light-bg: #F5F0E6;
+  --color-light-text: #3B2F2F;
+  --color-light-button: #A47149;
+  --color-light-button-hover: #8B5E3C;
+  --color-light-card: #FFFFFF;
+  --color-light-border: #D7CBBF;
+  --color-light-input-bg: #FDFBF8;
+  --color-light-input-border: #C2B8AF;
+
+  --color-dark-bg: #1B1D1F;
+  --color-dark-text: #EDE6DC;
+  --color-dark-button: #C29E75;
+  --color-dark-button-hover: #A37F58;
+  --color-dark-card: #26282B;
+  --color-dark-border: #3A3C3E;               
+  --color-dark-input-bg: #2F3033;
+  --color-dark-input-border: #4B4C4F;
+
+  --color-delete: #B02E2E;
+}
+
+.font-logo {
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.font-body {
+  font-family: "Merriweather", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.navbarOpen {
+  @apply top-0;
+}
+
+.navbarLink {
+  @apply border-b-2 p-4 md:p-5 lg:p-6 md:text-xl;
+}
+
+.logout-button {
+  @apply bg-delete text-dark-text
+          px-3 py-2 md:px-4 md:py-3
+          md:text-lg lg:text-xl
+          cursor-pointer hover:bg-delete/80 transition-all
+          rounded-xl md:rounded-2xl;
+}
+
+.primary-button {
+  @apply bg-light-button dark:bg-dark-button
+          px-3 py-2 md:px-4 md:py-3
+          md:text-lg lg:text-xl font-semibold
+          cursor-pointer hover:bg-light-button-hover dark:hover:bg-dark-button-hover transition-all
+          rounded-xl md:rounded-2xl
+          shadow-lg;
+}
+
+.input {
+    @apply bg-light-input-bg dark:bg-dark-input-bg 
+           w-full p-2 lg:p-3 rounded-xl md:rounded-2xl
+           border-light-input-border dark:border-dark-input-border border-2
+           shadow-xs;
+}
+
+.idInputDivOpen {
+  @apply flex;
+}
