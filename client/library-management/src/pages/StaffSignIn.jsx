@@ -39,12 +39,18 @@ export default function StaffSignIn() {
                 console.log("staff log in successful");
                 navigate("/");
             }
-            else {
-                setErrorDisplay(response.data.message || "Something went wrong");
-            }
         }
         catch(error) {
             console.log(error);
+            if(error.status === 400) {
+                setErrorDisplay("E-mail and password are required.")
+            }
+            else if(error.status === 401) {
+                setErrorDisplay("Invalid credentials.")
+            }
+            else {
+                setErrorDisplay("Something went wrong. Please try again.")
+            }
         }
     }
 
@@ -57,7 +63,11 @@ export default function StaffSignIn() {
                     <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold">
                         Staff Sign In
                     </h1>
-                    {errorDisplay && <p className="text-center text-error-red lg:text-xl">{errorDisplay} </p>}
+                    {errorDisplay ? 
+                        <p className="text-delete text-center md:text-lg lg:text-xl">{errorDisplay}</p>
+                        :
+                        null
+                    }
                     <input ref={emailRef} className="input" type="email" placeholder="E-mail" />
                     <input ref={passwordRef} className="input" type="password" placeholder="Password" />
                     <button onClick={handleStaffLogIn} className="primary-button">

@@ -52,12 +52,15 @@ export default function SignUp() {
                 console.log("registiration successful");
                 navigate("/")
             }
-            else {
-                setErrorDisplay(response.data.message || "Something went wrong")
-            }
         }
         catch(error) {
             console.log(error);
+            if(error.status === 400) {
+                setErrorDisplay("E-mail already registered.")
+            }
+            else {
+                setErrorDisplay("Something went wrong. Please try again.")
+            }
         }
     }
 
@@ -70,7 +73,11 @@ export default function SignUp() {
                     <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold md:col-start-1 md:col-end-3">
                         Sign Up
                     </h1>
-                    {errorDisplay && <p className="text-center md:col-start-1 md:col-end-3 text-error-red lg:text-xl">{errorDisplay} </p>}
+                    {errorDisplay ? 
+                        <p className="text-delete md:col-start-1 md:col-end-3 text-center md:text-lg lg:text-xl">{errorDisplay}</p>
+                        :
+                        null
+                    }
                     <input ref={emailRef} className="input md:col-start-1 md:col-end-3" type="email" placeholder="E-mail" />
                     <input ref={firstNameRef} className="input" type="text" placeholder="First name" />
                     <input ref={lastNameRef} className="input" type="text" placeholder="Last name" />
