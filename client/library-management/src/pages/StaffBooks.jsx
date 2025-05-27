@@ -80,14 +80,9 @@ export default function StaffBooks() {
                             {staffBooks?.map((book) => (
                                 <div key={book.Book_ID} className="bg-light-card dark:bg-dark-card border-light-border dark:border-dark-border border-2 p-4 md:p-5 lg:p-6 rounded-2xl flex justify-between items-center">
                                     <div className="space-y-1 md:space-y-2 lg:space-y-3">
-                                        <div className="flex items-end gap-x-2 md:gap-x-3 lg:gap-x-4">
-                                            <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">
-                                                {book.Title}
-                                            </h2>
-                                            <p className="text-light-text/50 dark:text-dark-text/50 text-md md:text-base lg:text-lg">
-                                                {book.Category_Name}
-                                            </p>
-                                        </div>
+                                        <h2 className="text-lg md:text-xl lg:text-2xl font-semibold">
+                                            {book.Title} <span className="text-light-text/50 dark:text-dark-text/50 text-sm md:text-base lg:text-lg">{book.Category_Name}</span>
+                                        </h2>
                                         <p className="text-md md:text-base lg:text-lg">
                                             {book.Author_Name}
                                         </p>
