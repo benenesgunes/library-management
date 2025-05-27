@@ -70,7 +70,7 @@ export default function StaffBooks() {
                     <div className="p-4 md:p-6 lg:p-8 flex flex-col gap-y-2 md:gap-y-3 lg:gap-y-4">
                         <div className="flex items-center justify-between mb-2">
                             <h1 className="font-semibold text-xl md:text-2xl lg:text-3xl">
-                                Available Books
+                                Create Loan
                             </h1>
                             <button className="primary-button" onClick={() => document.getElementById("idInputDiv2").classList.add("idInputDivOpen")}>
                                 Loan with Book ID

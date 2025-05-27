@@ -1,6 +1,9 @@
 import { Link } from "react-router"
 import useAuthStore from "../useAuthStore";
 
+// zustand'le theme'i store et.
+// loaning ve returning sayfalarinda asagidaki pop-up'ta ya da cikan input menusunde error'u goster
+
 export default function Home() {
     const { token, user, isStaff } = useAuthStore.getState();
 
